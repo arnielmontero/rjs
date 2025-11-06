@@ -1,0 +1,84 @@
+i. Controlled vs Uncontrolled Components
+Controlled Component:
+React state is the “single source of truth” for input values.
+
+import React, { useState } from 'react';
+
+function ControlledForm() {
+  const [value, setValue] = useState('');
+  function handleChange(e) {
+    setValue(e.target.value);
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert('Submitted: ' + value);
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input value={value} onChange={handleChange} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+
+Uncontrolled Component:
+Input value is managed by the DOM, accessed via a ref.
+
+import React, { useRef } from 'react';
+
+function UncontrolledForm() {
+  const inputRef = useRef();
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert('Submitted: ' + inputRef.current.value);
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input ref={inputRef} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+
+ii. Form Libraries
+Formik Example:
+
+import React from 'react';
+import { useFormik } from 'formik';
+
+function FormikForm() {
+  const formik = useFormik({
+    initialValues: { email: '' },
+    onSubmit: values => alert('Submitted: ' + values.email),
+  });
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <input
+        name="email"
+        value={formik.values.email}
+        onChange={formik.handleChange}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+React Hook Form Example:
+
+import React from 'react';
+import { useForm } from 'react-hook-form';
+
+function RHFForm() {
+  const { register, handleSubmit } = useForm();
+  function onSubmit(data) {
+    alert('Submitted: ' + data.email);
+  }
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input name="email" ref={register} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}

@@ -1,0 +1,47 @@
+Here are examples of using form libraries in React:
+
+Formik Example
+Formik simplifies form state, validation, and submission.
+
+import React from 'react';
+import { useFormik } from 'formik';
+
+function FormikForm() {
+  const formik = useFormik({
+    initialValues: { email: '' },
+    onSubmit: values => alert('Submitted: ' + values.email),
+  });
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <input
+        name="email"
+        value={formik.values.email}
+        onChange={formik.handleChange}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+React Hook Form Example
+React Hook Form is lightweight and uses uncontrolled components by default.
+
+import React from 'react';
+import { useForm } from 'react-hook-form';
+
+function RHFForm() {
+  const { register, handleSubmit } = useForm();
+  function onSubmit(data) {
+    alert('Submitted: ' + data.email);
+  }
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input name="email" ref={register} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+
+Both libraries help manage form state and validation efficiently.
+Let me know if you want to see validation or more advanced usage!
