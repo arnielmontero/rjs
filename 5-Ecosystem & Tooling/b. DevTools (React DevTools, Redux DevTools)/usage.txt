@@ -1,0 +1,28 @@
+Here’s how to use DevTools for React development:
+
+1. React DevTools
+What: Inspect React component trees, props, state, and hooks.
+
+How to install:
+    Chrome Extension
+    Firefox Add-on
+
+Usage:
+    Open your app in the browser.
+    Open DevTools (F12 or Ctrl+Shift+I).
+    Go to the "Components" and "Profiler" tabs.
+
+2. Redux DevTools
+What: Inspect Redux state, actions, and time-travel debug.
+How to install:
+    Chrome Extension
+    Firefox Add-on
+
+Usage:
+    Install the extension.
+    Integrate with your Redux store (if using Redux Toolkit, it works out of the box in development).
+    Open DevTools and use the "Redux" tab.
+
+React DevTools: Inspect and debug React components.
+Redux DevTools: Inspect and debug Redux state and actions.
+Both are essential for efficient React development and debugging.

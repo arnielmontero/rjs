@@ -1,0 +1,44 @@
+Here’s how to set up linting (ESLint) and formatting (Prettier) in a React project:
+
+1. Install ESLint and Prettier
+npm install --save-dev eslint prettier
+
+For React projects, also install:
+npm install --save-dev eslint-plugin-react eslint-config-prettier eslint-plugin-prettier
+
+2. Initialize ESLint
+npx eslint --init
+
+Choose React, your style guide, and other preferences.
+
+3. Example .eslintrc.json
+{
+  "extends": [
+    "react-app",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}
+
+4. Example .prettierrc
+{
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+
+5. Usage
+
+> Lint: 
+npx eslint src/
+
+> Format:
+npx prettier --write src/
+
+
+- ESLint finds code issues and enforces style.
+- Prettier auto-formats your code.
+- Use both for a clean, consistent codebase.

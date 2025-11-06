@@ -1,0 +1,28 @@
+Here’s how to deploy a React app to popular platforms:
+
+1. Vercel
+How:
+    Go to vercel.com, sign in with GitHub/GitLab/Bitbucket.
+    Click "New Project" and import your repo.
+    Vercel auto-detects React and deploys it.
+Push to main branch to redeploy.
+
+2. Netlify
+How:
+    Go to netlify.com, sign in with GitHub/GitLab/Bitbucket.
+    Click "Add new site" → "Import an existing project".
+    Select your repo, set build command (npm run build) and publish directory (build).
+    Netlify auto-deploys on push.
+
+3. AWS (S3 + CloudFront or Amplify)
+S3 + CloudFront:
+    Build your app: npm run build
+    Upload the build/ folder to an S3 bucket (set as static website).
+    (Optional) Use CloudFront for CDN and HTTPS.
+AWS Amplify:
+    Go to AWS Amplify.
+    Connect your repo and follow the setup wizard.
+
+- Vercel and Netlify are easiest for most React apps (free tier, auto CI/CD).
+- AWS is more customizable for enterprise or advanced needs.
+- Always build your app (npm run build) before deploying.

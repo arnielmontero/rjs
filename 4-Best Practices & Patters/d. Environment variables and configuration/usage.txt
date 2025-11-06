@@ -4,3 +4,22 @@ Here’s how to use environment variables and configuration in React:
 In Create React App, add variables to a .env file at your project root.
 Variable names must start with REACT_APP_.
 
+REACT_APP_API_URL=https://api.example.com
+REACT_APP_FEATURE_FLAG=true
+
+2. Access Environment Variables in Code
+const apiUrl = process.env.REACT_APP_API_URL;
+const featureFlag = process.env.REACT_APP_FEATURE_FLAG === 'true';
+
+console.log('API URL:', apiUrl);
+console.log('Feature enabled:', featureFlag);
+
+3. Usage Tips
+ > Never commit sensitive data (like secrets or passwords) to .env files.
+ > You must restart the dev server after changing .env files.
+ > For other build tools (Vite, Next.js), the prefix may differ (e.g., VITE_ for Vite, NEXT_PUBLIC_ for Next.js).
+
+Summary:
+ > Store config and secrets in .env files.
+ > Access them via process.env.REACT_APP_* in your code.
+ > Use different .env files for different environments (.env.development, .env.production, etc.).
