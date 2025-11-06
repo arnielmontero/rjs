@@ -1,0 +1,51 @@
+Here are some best practices for folder structure and scalable architecture in React projects:
+1. Common Folder Structure
+
+my-app/
+│
+├── public/
+│
+├── src/
+│   ├── assets/           # Images, fonts, etc.
+│   ├── components/       # Reusable UI components
+│   ├── features/         # Feature-based folders (recommended for scaling)
+│   │   ├── auth/
+│   │   │   ├── AuthPage.jsx
+│   │   │   ├── authSlice.js
+│   │   │   └── ...
+│   │   └── dashboard/
+│   │       ├── DashboardPage.jsx
+│   │       └── ...
+│   ├── hooks/            # Custom hooks
+│   ├── contexts/         # React context providers
+│   ├── utils/            # Utility functions
+│   ├── services/         # API calls, data fetching
+│   ├── App.jsx
+│   ├── index.js
+│   └── ...
+│
+├── package.json
+└── README.md
+
+2. Scalable Architecture Tips
+
+ - Feature-based structure: Group files by feature, not by type. This keeps related logic together and scales better for large apps.
+ - Keep components small and focused: Each component should do one thing well.
+ - Use index.js for re-exports: Simplifies imports from folders.
+ - Separate business logic from UI: Use hooks, services, or state management for logic, and keep components focused on rendering.
+ - Use absolute imports: Configure your project to use absolute paths for easier importing.
+
+3. Example Feature Folder
+
+src/features/todos/
+├── TodoList.jsx
+├── TodoItem.jsx
+├── todosSlice.js      # Redux slice or state logic
+├── todosAPI.js        # API calls
+└── index.js           # Re-export for easy import
+
+
+> Organize by feature for scalability.
+> Separate concerns (UI, logic, data).
+> Use folders for hooks, contexts, and utilities.
+> Keep your codebase clean and maintainable as it grows.

@@ -1,0 +1,25 @@
+Here’s how to do code splitting and lazy loading in React:
+
+1. React.lazy & Suspense
+Dynamically load components only when needed, reducing initial bundle size.
+
+import React, { Suspense } from 'react';
+
+// Lazy load the component
+const LazyComponent = React.lazy(() => import('./MyComponent'));
+
+function App() {
+  return (
+    <div>
+      <h2>Main App</h2>
+      <Suspense fallback={<div>Loading...</div>}>
+        <LazyComponent />
+      </Suspense>
+    </div>
+  );
+}
+
+ - React.lazy() lets you import a component only when it’s rendered.
+ - Suspense shows a fallback (like a loading spinner) while the component loads.
+ - Use React.lazy and Suspense for code splitting and lazy loading.
+ - This improves performance by loading code only when needed.

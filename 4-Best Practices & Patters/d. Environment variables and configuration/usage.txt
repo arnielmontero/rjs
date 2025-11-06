@@ -1,0 +1,6 @@
+Here’s how to use environment variables and configuration in React:
+
+1. Create Environment Variables
+In Create React App, add variables to a .env file at your project root.
+Variable names must start with REACT_APP_.
+

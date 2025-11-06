@@ -1,0 +1,69 @@
+Here’s a comparison of prop drilling, context, and state management in React:
+
+1. Prop Drilling
+Passing data through many layers of components via props.
+
+function Grandparent() {
+  const user = "Alice";
+  return <Parent user={user} />;
+}
+function Parent({ user }) {
+  return <Child user={user} />;
+}
+function Child({ user }) {
+  return <div>User: {user}</div>;
+}
+
+Cons:
+ - Tedious for deeply nested components.
+ - Hard to maintain as the app grows.
+
+2. Context API
+Provides a way to share values globally without passing props manually at every level.
+
+import React, { createContext, useContext } from 'react';
+
+const UserContext = createContext();
+
+function Grandparent() {
+  return (
+    <UserContext.Provider value="Alice">
+      <Parent />
+    </UserContext.Provider>
+  );
+}
+function Parent() {
+  return <Child />;
+}
+function Child() {
+  const user = useContext(UserContext);
+  return <div>User: {user}</div>;
+}
+
+Pros:
+ - Avoids prop drilling.
+ - Good for global data (theme, user, language).
+
+3. State Management Libraries
+(e.g., Redux, Zustand, Recoil)
+
+Used for complex or large-scale state needs.
+
+// Example with Redux Toolkit
+import { useSelector, useDispatch } from 'react-redux';
+import { increment } from './counterSlice';
+
+function Counter() {
+  const count = useSelector(state => state.counter.value);
+  const dispatch = useDispatch();
+  return (
+    <div>
+      <span>{count}</span>
+      <button onClick={() => dispatch(increment())}>Increment</button>
+    </div>
+  );
+}
+
+Pros:
+- Centralizes and organizes state.
+- Useful for large apps with complex state logic.
