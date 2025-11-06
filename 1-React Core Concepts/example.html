@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>React Core Concepts Example</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    button { margin-top: 1em; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/javascript">
+    // 1. JSX Example
+    const jsxElement = <h1>Welcome to React Core Concepts!</h1>;
+
+    // 2. Functional Component
+    function Welcome(props) {
+      return <h2>Hello, {props.name}!</h2>;
+    }
+
+    // 2. Class Component
+    class WelcomeClass extends React.Component {
+      render() {
+        return <h2>Hello from Class, {this.props.name}!</h2>;
+      }
+    }
+
+    // 3. Props & State Example
+    function Greeting(props) {
+      return <p>Hi, {props.user}!</p>;
+    }
+
+    function Counter() {
+      const [count, setCount] = React.useState(0);
+      return (
+        <div>
+          <p>Count: {count}</p>
+          <button onClick={() => setCount(count + 1)}>Increment</button>
+        </div>
+      );
+    }
+
+    // 4. Event Handling Example
+    function ClickButton() {
+      function handleClick() {
+        alert('Button clicked!');
+      }
+      return <button onClick={handleClick}>Click Me</button>;
+    }
+
+    // App Component to show all examples
+    function App() {
+      return (
+        <div>
+          {jsxElement}
+          <Welcome name="Alice" />
+          <WelcomeClass name="Bob" />
+          <Greeting user="Charlie" />
+          <Counter />
+          <ClickButton />
+        </div>
+      );
+    }
+
+    // Render App
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

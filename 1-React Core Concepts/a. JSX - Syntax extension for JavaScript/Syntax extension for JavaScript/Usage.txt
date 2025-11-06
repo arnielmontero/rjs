@@ -1,0 +1,8 @@
+// JSX: Syntax Extension for JavaScript
+JSX lets you write HTML-like code in JavaScript.
+
+// JSX Example
+const element = <h1>Hello, React!</h1>;
+
+
+

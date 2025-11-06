@@ -1,0 +1,15 @@
+// Components: Functional and Class Components
+Functional Component:
+
+function Welcome(props) {
+  return <h2>Hello, {props.name}!</h2>;
+}
+
+Class Component:
+import React, { Component } from 'react';
+
+class WelcomeClass extends Component {
+  render() {
+    return <h2>Hello, {this.props.name}!</h2>;
+  }
+}
