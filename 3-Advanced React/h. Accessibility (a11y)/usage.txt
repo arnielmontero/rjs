@@ -1,0 +1,53 @@
+Here’s how to make your React apps more accessible (a11y):
+
+1. Use Semantic HTML
+Use elements like <button>, <nav>, <header>, <main>, <form>, etc.
+
+function CustomCheckbox({ checked, onChange }) {
+  return (
+    <div
+      role="checkbox"
+      aria-checked={checked}
+      tabIndex={0}
+      onClick={() => onChange(!checked)}
+      onKeyDown={e => {
+        if (e.key === ' ') onChange(!checked);
+      }}
+      style={{
+        width: 20,
+        height: 20,
+        border: '1px solid #333',
+        display: 'inline-block',
+        background: checked ? '#333' : '#fff',
+      }}
+    />
+  );
+}
+
+3. Label Form Elements
+Always associate <label> with form controls.
+
+function NameInput() {
+  return (
+    <div>
+      <label htmlFor="name">Name:</label>
+      <input id="name" name="name" />
+    </div>
+  );
+}
+
+4. Keyboard Navigation
+Ensure interactive elements are focusable and usable with keyboard.
+
+function FocusableButton() {
+  return <button tabIndex={0}>Focusable</button>;
+}
+
+5. Alt Text for Images
+
+<img src="logo.png" alt="Company Logo" />
+
+> Use semantic HTML and proper labels.
+> Add ARIA attributes for custom widgets.
+> Ensure keyboard and screen reader accessibility.
+> Test with tools like axe or browser dev tools.

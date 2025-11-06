@@ -1,0 +1,21 @@
+ii. Code Splitting & Lazy Loading
+React.lazy & Suspense
+
+import React, { Suspense } from 'react';
+
+const LazyComponent = React.lazy(() => import('./MyComponent'));
+
+function App() {
+  return (
+    <div>
+      <h2>App</h2>
+      <Suspense fallback={<div>Loading...</div>}>
+        <LazyComponent />
+      </Suspense>
+    </div>
+  );
+}
+
+> React.lazy dynamically loads a component.
+> Suspense shows a fallback while loading.
+

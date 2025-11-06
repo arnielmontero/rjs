@@ -1,0 +1,44 @@
+Here’s how to do unit testing in React using Jest and React Testing Library:
+1. Simple React Component
+
+// Counter.js
+import React, { useState } from 'react';
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <span data-testid="count">{count}</span>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+2. Unit Test with Jest & React Testing Library
+
+// Counter.test.js
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { Counter } from './Counter';
+
+test('renders initial count', () => {
+  render(<Counter />);
+  expect(screen.getByTestId('count').textContent).toBe('0');
+});
+
+test('increments count on button click', () => {
+  render(<Counter />);
+  fireEvent.click(screen.getByText('Increment'));
+  expect(screen.getByTestId('count').textContent).toBe('1');
+});
+
+
+How to run:
+ - Place your test files as *.test.js or *.spec.js.
+ - Run npm test or yarn test to execute tests.
+
+Key Points:
+ - Use render to render your component.
+ - Use screen to query elements.
+ - Use fireEvent to simulate user actions.
+ - Use Jest’s expect for assertions.

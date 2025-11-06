@@ -1,0 +1,52 @@
+Here are examples of custom hooks and reusable components in React:
+
+1. Custom Hook Example
+A custom hook is a function that uses React hooks to encapsulate logic.
+
+import { useState, useEffect } from 'react';
+
+// Custom hook to track window width
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return width;
+}
+
+// Usage
+function ShowWidth() {
+  const width = useWindowWidth();
+  return <div>Window width: {width}px</div>;
+}
+
+
+2. Reusable Component Example
+A reusable component is a generic component that can be used in different places.
+
+function Button({ children, onClick, type = "button" }) {
+  return (
+    <button type={type} onClick={onClick} style={{ padding: '8px 16px', margin: '4px' }}>
+      {children}
+    </button>
+  );
+}
+
+// Usage
+function App() {
+  return (
+    <div>
+      <Button onClick={() => alert('Clicked!')}>Click Me</Button>
+      <Button type="submit">Submit</Button>
+    </div>
+  );
+}
+
+> Custom hooks encapsulate logic for reuse across components.
+> Reusable components are generic UI elements you can use anywhere in your app.

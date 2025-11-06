@@ -1,0 +1,43 @@
+i. Memoization
+React.memo
+Prevents unnecessary re-renders of functional components if props don’t change.
+
+const MyComponent = React.memo(function MyComponent({ value }) {
+  console.log('Rendering MyComponent');
+  return <div>{value}</div>;
+});
+
+useMemo
+Memoizes a computed value.
+
+import React, { useMemo, useState } from 'react';
+
+function ExpensiveCalculation({ num }) {
+  const result = useMemo(() => {
+    // Simulate expensive calculation
+    let total = 0;
+    for (let i = 0; i < 1e7; i++) total += num;
+    return total;
+  }, [num]);
+  return <div>Result: {result}</div>;
+}
+
+useCallback
+Memoizes a function reference.
+
+import React, { useCallback, useState } from 'react';
+
+function Button({ onClick, children }) {
+  return <button onClick={onClick}>{children}</button>;
+}
+
+function Parent() {
+  const [count, setCount] = useState(0);
+  const handleClick = useCallback(() => setCount(c => c + 1), []);
+  return (
+    <div>
+      <Button onClick={handleClick}>Increment</Button>
+      <div>Count: {count}</div>
+    </div>
+  );
+}

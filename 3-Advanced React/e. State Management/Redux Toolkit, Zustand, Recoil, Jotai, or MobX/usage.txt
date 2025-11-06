@@ -1,0 +1,129 @@
+Here are simple usage examples for popular state management libraries in React:
+
+1. Redux Toolkit
+
+// store.js
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState: { value: 0 },
+  reducers: {
+    increment: state => { state.value += 1; }
+  }
+});
+
+export const { increment } = counterSlice.actions;
+export const store = configureStore({ reducer: { counter: counterSlice.reducer } });
+
+// App.js
+import React from 'react';
+import { Provider, useSelector, useDispatch } from 'react-redux';
+import { store, increment } from './store';
+
+function Counter() {
+  const value = useSelector(state => state.counter.value);
+  const dispatch = useDispatch();
+  return (
+    <div>
+      <span>{value}</span>
+      <button onClick={() => dispatch(increment())}>Increment</button>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Provider store={store}>
+      <Counter />
+    </Provider>
+  );
+}
+
+2. Zustand
+
+import create from 'zustand';
+
+const useStore = create(set => ({
+  count: 0,
+  increment: () => set(state => ({ count: state.count + 1 }))
+}));
+
+function Counter() {
+  const { count, increment } = useStore();
+  return (
+    <div>
+      <span>{count}</span>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
+
+3. Recoil
+
+import { atom, useRecoilState, RecoilRoot } from 'recoil';
+
+const countState = atom({
+  key: 'countState',
+  default: 0,
+});
+
+function Counter() {
+  const [count, setCount] = useRecoilState(countState);
+  return (
+    <div>
+      <span>{count}</span>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <RecoilRoot>
+      <Counter />
+    </RecoilRoot>
+  );
+}
+
+4. Jotai
+
+import { atom, useAtom } from 'jotai';
+
+const countAtom = atom(0);
+
+function Counter() {
+  const [count, setCount] = useAtom(countAtom);
+  return (
+    <div>
+      <span>{count}</span>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+5. MobX
+
+import { makeAutoObservable } from 'mobx';
+import { observer } from 'mobx-react-lite';
+
+class CounterStore {
+  count = 0;
+  constructor() {
+    makeAutoObservable(this);
+  }
+  increment() {
+    this.count += 1;
+  }
+}
+const counterStore = new CounterStore();
+
+const Counter = observer(() => (
+  <div>
+    <span>{counterStore.count}</span>
+    <button onClick={() => counterStore.increment()}>Increment</button>
+  </div>
+));
+
+> All libraries provide global state, but with different APIs and philosophies.
+> Redux Toolkit is the most popular for large apps; Zustand, Recoil, Jotai, and MobX are simpler alternatives.

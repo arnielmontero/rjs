@@ -1,0 +1,44 @@
+Here’s how Server-Side Rendering (SSR) and Static Site Generation (SSG) work in React using the Next.js framework:
+
+1. Basic Next.js Page
+
+// pages/index.js
+export default function Home({ time }) {
+  return <div>Current time: {time}</div>;
+}
+
+2. Static Site Generation (SSG)
+Builds the page at build time.
+
+// pages/index.js
+export async function getStaticProps() {
+  return {
+    props: {
+      time: new Date().toISOString(),
+    },
+    revalidate: 10, // (optional) ISR: Regenerate every 10 seconds
+  };
+}
+
+3. Server-Side Rendering (SSR)
+Builds the page on every request.
+
+// pages/index.js
+export async function getServerSideProps() {
+  return {
+    props: {
+      time: new Date().toISOString(),
+    },
+  };
+}
+
+4. How to Start a Next.js Project
+
+npx create-next-app@latest my-next-app
+cd my-next-app
+npm run dev
+
+
+> Use getStaticProps for SSG (faster, cached at build time).
+> Use getServerSideProps for SSR (fresh data on every request).
+> Next.js handles routing, SSR, SSG, and more out of the box.

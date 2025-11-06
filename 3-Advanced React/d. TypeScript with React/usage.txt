@@ -1,0 +1,58 @@
+Here’s how to use TypeScript with React:
+
+1. Functional Component with Props
+
+// Hello.tsx
+import React from 'react';
+
+type HelloProps = {
+  name: string;
+  age?: number; // optional prop
+};
+
+const Hello: React.FC<HelloProps> = ({ name, age }) => (
+  <div>
+    Hello, {name}! {age && <span>Age: {age}</span>}
+  </div>
+);
+
+export default Hello;
+
+2. Using useState with Types
+
+import React, { useState } from 'react';
+
+const Counter: React.FC = () => {
+  const [count, setCount] = useState<number>(0);
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  );
+};
+
+3. Typing Events
+
+function InputExample() {
+  const [value, setValue] = React.useState<string>('');
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setValue(e.target.value);
+  }
+  return <input value={value} onChange={handleChange} />;
+}
+
+4. Typing Context
+
+import React, { createContext, useContext } from 'react';
+
+type Theme = 'light' | 'dark';
+const ThemeContext = createContext<Theme>('light');
+
+function ThemedComponent() {
+  const theme = useContext(ThemeContext);
+  return <div>Theme: {theme}</div>;
+}
+
+How to start a React + TypeScript project:
+
+npx create-react-app my-app --template typescript
