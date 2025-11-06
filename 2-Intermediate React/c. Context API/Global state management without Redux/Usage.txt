@@ -1,0 +1,46 @@
+Here’s how to use the Context API for global state management in React (without Redux):
+
+1. Create a Context
+
+import React, { createContext, useState } from 'react';
+const UserContext = createContext();
+
+
+2. Provide Context Value
+Wrap your app (or part of it) with the provider and pass the value:
+
+function UserProvider({ children }) {
+  const [user, setUser] = useState("Alice");
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+}
+
+
+3. Consume Context in Any Component
+Use useContext to access the global state:
+
+import React, { useContext } from 'react';
+
+function ShowUser() {
+  const { user } = useContext(UserContext);
+  return <div>User: {user}</div>;
+}
+
+function ChangeUser() {
+  const { setUser } = useContext(UserContext);
+  return <button onClick={() => setUser("Bob")}>Change User</button>;
+}
+
+4. Usage Example
+
+function App() {
+  return (
+    <UserProvider>
+      <ShowUser />
+      <ChangeUser />
+    </UserProvider>
+  );
+}

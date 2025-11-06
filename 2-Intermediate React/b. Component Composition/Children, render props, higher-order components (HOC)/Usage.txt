@@ -1,0 +1,52 @@
+Here are examples of Component Composition in React:
+
+1. Children
+Pass components or elements as children:
+
+function Card({ children }) {
+  return <div style={{ border: '1px solid #ccc', padding: 16 }}>{children}</div>;
+}
+
+// Usage
+function App() {
+  return (
+    <Card>
+      <h2>Card Title</h2>
+      <p>This is inside the card.</p>
+    </Card>
+  );
+}
+
+2. Render Props
+Pass a function as a prop to control rendering:
+
+function DataProvider({ render }) {
+  const data = "Hello from DataProvider!";
+  return render(data);
+}
+
+// Usage
+function App() {
+  return (
+    <DataProvider render={data => <div>{data}</div>} />
+  );
+}
+
+3. Higher-Order Components (HOC)
+A function that takes a component and returns a new component:
+
+function withLogger(WrappedComponent) {
+  return function(props) {
+    console.log('Props:', props);
+    return <WrappedComponent {...props} />;
+  };
+}
+
+// Usage
+function Hello({ name }) {
+  return <h2>Hello, {name}!</h2>;
+}
+
+const HelloWithLogger = withLogger(Hello);
+
+// <HelloWithLogger name="Alice" />
