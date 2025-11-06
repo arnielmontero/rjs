@@ -1,0 +1,264 @@
+<script>
+
+/*
+Here’s a complete React app example demonstrating all advanced concepts (a–i) in one place.
+This code is for a modern React project (e.g., created with Create React App or Vite).
+Note: You’ll need to install dependencies:
+
+npm install framer-motion react-spring
+*/
+
+
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  createContext,
+  useContext,
+  Suspense,
+  Component,
+} from 'react';
+import { motion } from 'framer-motion';
+import { useSpring, animated } from 'react-spring';
+
+// a. Performance Optimization
+const MemoChild = React.memo(function MemoChild({ value }) {
+  console.log('MemoChild rendered');
+  return <div>Memoized Value: {value}</div>;
+});
+
+function ExpensiveCalculation({ num }) {
+  const result = useMemo(() => {
+    let total = 0;
+    for (let i = 0; i < 1e6; i++) total += num;
+    return total;
+  }, [num]);
+  return <div>Expensive Calculation: {result}</div>;
+}
+
+function CallbackExample({ onClick }) {
+  return <button onClick={onClick}>Increment (useCallback)</button>;
+}
+
+function PerformanceDemo() {
+  const [count, setCount] = useState(0);
+  const handleClick = useCallback(() => setCount(c => c + 1), []);
+  return (
+    <section>
+      <h2>a. Performance Optimization</h2>
+      <MemoChild value={count} />
+      <ExpensiveCalculation num={count} />
+      <CallbackExample onClick={handleClick} />
+      <div>Count: {count}</div>
+    </section>
+  );
+}
+
+// b. Code Splitting, Lazy Loading
+const LazyComponent = React.lazy(() => Promise.resolve({
+  default: () => <div>Lazy Loaded Component!</div>
+}));
+
+function LazyDemo() {
+  return (
+    <section>
+      <h2>b. Code Splitting & Lazy Loading</h2>
+      <Suspense fallback={<div>Loading...</div>}>
+        <LazyComponent />
+      </Suspense>
+    </section>
+  );
+}
+
+// c. Error Boundaries
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error, info) {
+    console.error(error, info);
+  }
+  render() {
+    if (this.state.hasError) return <div>Something went wrong.</div>;
+    return this.props.children;
+  }
+}
+function BuggyComponent() {
+  throw new Error('Oops!');
+}
+function ErrorBoundaryDemo() {
+  return (
+    <section>
+      <h2>c. Error Boundaries</h2>
+      <ErrorBoundary>
+        {/* Uncomment to see error boundary in action */}
+        {/* <BuggyComponent /> */}
+        <div>No error here!</div>
+      </ErrorBoundary>
+    </section>
+  );
+}
+
+// d. TypeScript with React (JSX example, see comments for types)
+/*
+// Example in TypeScript:
+// type HelloProps = { name: string; };
+// const Hello: React.FC<HelloProps> = ({ name }) => <div>Hello, {name}</div>;
+*/
+function Hello({ name }) {
+  return <div>Hello, {name}</div>;
+}
+
+// e. State Management (Context API example)
+const CountContext = createContext();
+function CountProvider({ children }) {
+  const [count, setCount] = useState(0);
+  return (
+    <CountContext.Provider value={{ count, setCount }}>
+      {children}
+    </CountContext.Provider>
+  );
+}
+function Counter() {
+  const { count, setCount } = useContext(CountContext);
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>Context Increment</button>
+      <span> {count}</span>
+    </div>
+  );
+}
+
+// f. SSR & SSG (Next.js only, see comments)
+/*
+// Example for Next.js:
+// export async function getStaticProps() { ... }
+// export async function getServerSideProps() { ... }
+*/
+
+// g. Custom Hooks & Reusable Components
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    function handleResize() { setWidth(window.innerWidth); }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  return width;
+}
+function ShowWidth() {
+  const width = useWindowWidth();
+  return <div>Window width: {width}px</div>;
+}
+function Button({ children, onClick, type = "button" }) {
+  return (
+    <button type={type} onClick={onClick} style={{ padding: '8px 16px', margin: '4px' }}>
+      {children}
+    </button>
+  );
+}
+
+// h. Accessibility (a11y)
+function AccessibleForm() {
+  return (
+    <form>
+      <label htmlFor="name">Name:</label>
+      <input id="name" name="name" aria-label="Name" />
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+}
+function CustomCheckbox({ checked, onChange }) {
+  return (
+    <div
+      role="checkbox"
+      aria-checked={checked}
+      tabIndex={0}
+      onClick={() => onChange(!checked)}
+      onKeyDown={e => { if (e.key === ' ') onChange(!checked); }}
+      style={{
+        width: 20, height: 20, border: '1px solid #333', display: 'inline-block',
+        background: checked ? '#333' : '#fff', marginLeft: 8
+      }}
+    />
+  );
+}
+
+// i. Animations
+function AnimatedBox() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+      style={{ width: 100, height: 100, background: 'tomato', margin: 20 }}
+    />
+  );
+}
+function SpringBox() {
+  const styles = useSpring({
+    from: { opacity: 0, transform: 'translateX(-100px)' },
+    to: { opacity: 1, transform: 'translateX(0)' },
+    config: { duration: 500 }
+  });
+  return (
+    <animated.div style={{ ...styles, width: 100, height: 100, background: 'skyblue', margin: 20 }} />
+  );
+}
+
+// Main App
+export default function AdvancedReactExample() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <CountProvider>
+      <h1>Advanced React Example (a–i)</h1>
+      <PerformanceDemo />
+      <LazyDemo />
+      <ErrorBoundaryDemo />
+      <section>
+        <h2>d. TypeScript with React</h2>
+        <Hello name="TypeScript User" />
+      </section>
+      <section>
+        <h2>e. State Management (Context API)</h2>
+        <Counter />
+      </section>
+      <section>
+        <h2>g. Custom Hooks & Reusable Components</h2>
+        <ShowWidth />
+        <Button onClick={() => alert('Clicked!')}>Reusable Button</Button>
+      </section>
+      <section>
+        <h2>h. Accessibility (a11y)</h2>
+        <AccessibleForm />
+        <label>
+          Custom Checkbox:
+          <CustomCheckbox checked={checked} onChange={setChecked} />
+        </label>
+      </section>
+      <section>
+        <h2>i. Animations</h2>
+        <AnimatedBox />
+        <SpringBox />
+      </section>
+    </CountProvider>
+  );
+}
+
+
+
+/*
+How to use:
+
+> Place this in a file like AdvancedReactExample.jsx in your React project.
+> Import and render <AdvancedReactExample /> in your App.js or App.tsx.
+> Install dependencies: npm install framer-motion react-spring
+> For SSR/SSG, see the comments for Next.js usage.
+*/
+
+</script>
